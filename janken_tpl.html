@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="icon" href="./img/icon.png">
+<title>じゃんけん村の占い</title>
+</head>
+
+<body id="body_wrapper">
+
+<header class="header-wrapper">
+  <a id="page-title"> <h1 class="h1title">じゃんけん村の占い</h1></a>
+</header>
+
+<main class="main">
+  <p>じゃんけんであなたの今日の運勢が分かります</p>
+  <p>さあ始めましょう</p>
+  <p>あなたの手を選んでください</p>
+  <ul class="list-wrapper">
+    <li><a href="#result-title"><button class="btn_hand" onclick="playerTurn(0)"><img src="./img/gu.png" alt="グー" height="200px"></button></a></li>
+    <li><a href="#result-title"><button class="btn_hand" onclick="playerTurn(1)"><img src="./img/choki.png" alt="チョキ" height="200px"></button></a></li>
+    <li><a href="#result-title"><button class="btn_hand" onclick="playerTurn(2)"><img src="./img/pa.png" alt="グー" height="200px"></button></a></li>
+  </ul>
+  <div class="result-wrapper">
+  <h2 class="h2title"id="result-title">相手の出した手は? </h2>
+    <div class="result-inwrapper">
+      <div id="showResult">
+        <span id="pc_hands"></span>
+        <div>結果は<span id="judgement"></span></div>
+    </div>
+  </div>
+
+</div>
+<div class="oracle-wrapper">
+  <h2 class="h2title">占い結果</h2>
+  <div class="oracle-inwrapper">
+    <div id="showOracle">
+      
+      <p><span id="myHand"></span>を出して<span id="result"></span>貴方</p>
+      <p id="followUp"></p>
+      <div class="oracleLuckyItem">
+        <p>本日のラッキーアイテム</p>
+        <p id="luckyItem"><span id="color"></span>の<span id="clothing"></span>を身に着けて</p>
+        <p id="followUp2"></p>
+      </div>
+    </div>  
+  </div>
+</div>
+
+<div class="button-wrapper">
+  <a href="#page-title"><button class="btn-reset" onclick="reset()">もう一度占う</button></a>
+</div>
+</main>
+
+<footer class="footer-wrapper">
+  <small>copyrights 2022 JankenMura All Rights Reserved.</small></footer>
+<script>
+
+$("#showResult").hide()
+$("#showOracle").hide() 
+
+function playerTurn(jankenPl){
+
+$("#showResult").fadeIn(2500)
+$("#showOracle").fadeIn(5000) 
+let janken=["グー","チョキ","パー",];
+let jankenOp=Math.floor(Math.random()*3);
+
+if(jankenOp==jankenPl){
+  result="引き分け";
+}else if(jankenOp==0&&jankenPl==1){
+  result="負け";
+}else if(jankenOp==0&&jankenPl==2){
+  result="勝ち";
+}else if(jankenOp==1&&jankenPl==0){
+  result="勝ち";
+}else if(jankenOp==1&&jankenPl==2){
+  result="負け";
+}else if(jankenOp==2&&jankenPl==0){
+  result="負け";
+}else if(jankenOp==2&&jankenPl==1){
+  result="勝ち";
+}
+
+document.getElementById("pc_hands").innerHTML=janken[jankenOp]
+document.getElementById("judgement").innerHTML=result
+
+let colorSelection=["エレクトリックブルー",
+"アズテックゴールド","サンセットレッド",
+"モリモリグリーン","ライトニングイエロー",
+"恋するピンク","エグゼクティブパープル",]
+let colorSelectionR=Math.floor(Math.random()*7);
+
+let clothesSelection=["タイツ","ハット",
+"パンツ","サングラス","リボン","靴下",
+"ベスト","ショートパンツ","タンクトップ",
+"ハチマキ"]
+let clothesSelectionR=Math.floor(Math.random()*10);
+
+let winSelection=["ただいま絶好調です","もうだれにも止められません",
+"上昇気流に乗っています","じゃんけん村の村長に任命します",
+"今無我の境地に達しています","む・て・き！"]
+let winSelectionR=Math.floor(Math.random()*6);
+
+let loseSelection=["飲みすぎです","最近いろいろ焦っていませんか",
+"最近何もかも上手くいかないと感じていませんか","大殺界のど真ん中にいます",
+"隣の後輩にやさしくしてみましょう","カーテンを開けて部屋にお日様の光を入れましょう"]
+let loseSelectionR=Math.floor(Math.random()*6);
+
+let drawSelection=["部屋を片付けましょう","睡眠不足です",
+"最近忘れ物が多くないですか","スマホの充電、切れかけてないですか",
+"毎日青汁を飲みましょう","お部屋の鉢植え、枯らしていませんか"]
+let drawSelectionR=Math.floor(Math.random()*6)
+if(result=="勝ち"){
+  document.getElementById("myHand").innerHTML=janken[jankenPl]
+  document.getElementById("color").innerHTML=colorSelection[colorSelectionR];
+  document.getElementById("clothing").innerHTML=clothesSelection[clothesSelectionR];
+document.getElementById("result").innerHTML="見事"+result+"収めた";
+document.getElementById("followUp").innerHTML=winSelection[winSelectionR];
+document.getElementById("followUp2").innerHTML="さらに運気を高めましょう";
+}
+if(result=="負け"){
+  document.getElementById("myHand").innerHTML=janken[jankenPl]
+  document.getElementById("color").innerHTML=colorSelection[colorSelectionR];
+  document.getElementById("clothing").innerHTML=clothesSelection[clothesSelectionR];
+document.getElementById("result").innerHTML="惜しくも"+result+"てしまった";
+document.getElementById("followUp").innerHTML=loseSelection[loseSelectionR];
+document.getElementById("followUp2").innerHTML="運を味方につけましょう";
+}
+if(result=="引き分け"){
+  document.getElementById("myHand").innerHTML=janken[jankenPl]
+  document.getElementById("color").innerHTML=colorSelection[colorSelectionR];
+  document.getElementById("clothing").innerHTML=clothesSelection[clothesSelectionR];
+document.getElementById("result").innerHTML="もう一歩のところで"+result+"てしまった";
+document.getElementById("followUp").innerHTML=drawSelection[drawSelectionR];
+document.getElementById("followUp2").innerHTML="運を味方につけましょう";
+}
+
+}
+
+function reset(){
+$("#showResult").hide()
+$("#showOracle").hide() 
+
+}
+
+</script>
+</body>
+</html>
